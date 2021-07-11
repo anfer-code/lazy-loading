@@ -1,3 +1,16 @@
 @import 'tailwindcss/dist/base.css';
 @import 'tailwindcss/dist/components.css';
 @import 'tailwindcss/dist/utilities.css';
+
+.button {
+    padding: 10px 30px;
+    background-color: rgba(54, 42, 218, 0.856);
+    margin-top: 20px;
+    color: white;
+    border-radius: 30px;
+    border: none;
+}
+
+.button:focus {
+    outline: none;
+}
