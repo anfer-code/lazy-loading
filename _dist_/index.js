@@ -1,7 +1,5 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+import { observeImg } from "./lazy.js"
+import { contar } from "./count.js"
 
 //Usaremos async / await para este proyecto.
 
@@ -9,17 +7,19 @@
 const baseUrl = "https://randomfox.ca/floof/"
 const idImg = document.querySelector("#images")
 const button = document.querySelector("#button")
+const eraser = document.querySelector("#eraser")
 
-const createImg = async () => {
+
+
+const urlImg = async () => {
     // Petición Asincrona a nuestra url
     let imgUrl = await fetch(baseUrl)
     let data = await imgUrl.json()
     let valor = data.image
-    console.log(valor)
-    imgTemplate(valor)
+    return valor
 }
 
-const imgTemplate = (url) => {
+const createImg = async () => {
 
     // Creamos nuestro contenedor de img
     const card = document.createElement("div")
@@ -27,17 +27,45 @@ const imgTemplate = (url) => {
 
     // Creamos nuestra imagen
     const img = document.createElement("img")
-    img.src = url
+    img.dataset.src = await urlImg()
     img.setAttribute("width", "320")
-    img.setAttribute("alt", "fox")
     img.className = "mx-auto"
 
-    //agregamos las imagenes a las cards
-    card.append(img)
+    //wrapper para la imagen
+    const wrapp = document.createElement("div")
+    wrapp.className = "lazy"
+    wrapp.append(img)
 
-    //Agregamos valores a un array o al document
-    idImg.append(card)
+    //agregamos las imagenes a las cards
+    card.append(wrapp)
+    contar.imgAgreg()
+    return card
 
 }
 
-button.addEventListener("click", createImg)
+// Con el profesor
+// const addImg = async () => {
+//     let newImage = await createImg()
+//     // //Agregamos imagenes al document
+//     idImg.append(newImage)
+//     registerImg(newImage)
+// }
+
+// Yo solo
+const addImg = async () => {
+    let newImage = await createImg()
+    idImg.append(newImage)
+    observeImg(newImage)
+}
+
+
+const cleanDom = () => {
+    let arr = idImg.querySelectorAll("div")
+    contar.imgDelete()
+    arr.forEach(i => {
+        i.remove()
+    })
+}
+
+button.addEventListener("click", addImg)
+eraser.addEventListener("click", cleanDom)

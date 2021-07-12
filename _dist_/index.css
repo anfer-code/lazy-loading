@@ -8,9 +8,23 @@
     margin-top: 20px;
     color: white;
     border-radius: 30px;
+    font-weight: bold;
     border: none;
+    
 }
 
 .button:focus {
     outline: none;
+}
+
+.button--yellow {
+    background: rgba(248, 214, 18, 0.877);
+    color: black;
+    right: calc(50% - 50px);
+}
+
+.lazy {
+    background-color: gray;
+    min-height: 150px;
+    display: inline-block;
 }
